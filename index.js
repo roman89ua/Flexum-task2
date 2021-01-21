@@ -1,5 +1,7 @@
-function check(str) {
-  return samples[str];
+//Added the second parameter (obj) to make check function totaly reuseble, sorry about that :)
+
+function check(obj, str) {
+  return obj[str] ?? "Something went wrong. Try again. "; // added new ability of JS (??) for not to get undefind but get some message about error
 }
 
 const samples = {
@@ -15,7 +17,7 @@ const samples = {
 function test(samples) {
   const messages = Object.keys(samples).map(function (sample) {
     const expectedResult = samples[sample];
-    const actualResult = check(sample);
+    const actualResult = check(samples, "sample"); // or we just can use samples[sample] at this line and not create a func out of this func
     const passed = expectedResult === actualResult;
     const butMsg = passed
       ? ""
