@@ -17,7 +17,7 @@ const samples = {
 function test(samples) {
   const messages = Object.keys(samples).map(function (sample) {
     const expectedResult = samples[sample];
-    const actualResult = check(samples, "sample"); // or we just can use samples[sample] at this line and not create a func out of this func
+    const actualResult = check(samples, sample); // or we just can use samples[sample] at this line and not create a func out of this func
     const passed = expectedResult === actualResult;
     const butMsg = passed
       ? ""
