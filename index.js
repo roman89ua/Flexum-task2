@@ -1,7 +1,28 @@
-//Added the second parameter (obj) to make check function totaly reuseble, sorry about that :)
-
-function check(obj, str) {
-  return obj[str] ?? "Something went wrong. Try again. "; // added new ability of JS (??) for not to get undefind but get some message about error
+function check(str) {
+  const openedBraces = ["[", "{", "("];
+  const closedBraces = ["]", "}", ")"];
+  const { result, braces } = str.split("").reduce(
+    function (acc, el) {
+      if (openedBraces.includes(el)) {
+        return { ...acc, braces: [...acc.braces, el] };
+      }
+      if (!acc.braces.length && closedBraces.includes[el]) {
+        return { ...acc, result: false };
+      }
+      if (closedBraces.includes(el)) {
+        const lastBrace = acc.braces[acc.braces.length - 1];
+        const index = openedBraces.findIndex((brace) => brace === lastBrace);
+        const isValid = closedBraces[index] === el;
+        return {
+          braces: [...acc.braces.slice(0, -1)],
+          result: acc.result && isValid,
+        };
+      }
+      return acc;
+    },
+    { braces: [], result: true }
+  );
+  return result && braces.length === 0;
 }
 
 const samples = {
@@ -17,7 +38,7 @@ const samples = {
 function test(samples) {
   const messages = Object.keys(samples).map(function (sample) {
     const expectedResult = samples[sample];
-    const actualResult = check(samples, sample); // or we just can use samples[sample] at this line and not create a func out of this func
+    const actualResult = check(sample);
     const passed = expectedResult === actualResult;
     const butMsg = passed
       ? ""
